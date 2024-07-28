@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Studies";
+}
+
+<div class="page-title">
+    <h1>Studies</h1>
+    <div class="toolbar">
+        <button class="btn btn-primary btn-icon-circle create-study"><i class="fas fa-plus"></i></button>
+    </div>
+</div>
+
+<div id="editor"></div>
+
+@section scripts {
+    <script src="/js/objectEditor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var editor = new editors.objectEditor({
+                typeCode: 'study',
+                definitionUrl: "/api/studies/definition",
+                listUrl: "/api/studies",
+                getUrl: '/api/studies/{id}',
+                saveUrl: "/api/studies",
+                deleteUrl: "/api/studies",
+            });
+        });
+    </script>
+}

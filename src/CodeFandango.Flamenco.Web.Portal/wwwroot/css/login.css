@@ -1,0 +1,48 @@
+﻿.content {
+  width: 100vw;
+  height: 100vh;
+}
+.content main {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #9cd3ff;
+}
+.content main .logo {
+  margin-top: -25vh;
+  margin-bottom: 32px;
+}
+.content main #loginform {
+  width: 30vw;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0 16px #999;
+}
+.content main #loginform .form-group {
+  margin-bottom: 16px;
+}
+.content main #loginform .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.content main #loginform .form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.content main #loginform .form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content main #loginform .form-actions button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #9cd3ff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

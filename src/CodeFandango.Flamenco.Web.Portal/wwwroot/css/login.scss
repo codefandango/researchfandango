@@ -1,0 +1,62 @@
+$menuWidth: 250px;
+$menuBg: #9cd3ff;
+
+$pad: 16px;
+
+.content {
+    width: 100vw;
+    height: 100vh;
+
+    main {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: $menuBg;
+
+        .logo {
+            margin-top: -25vh;
+            margin-bottom: $pad * 2;
+        }
+
+        #loginform {
+            width: 30vw;
+            padding: 1rem;
+            background-color: #fff;
+            box-shadow: 0 0 $pad #999;
+
+            .form-group {
+                margin-bottom: $pad;
+
+                label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 0.5rem;
+                    font-size: 1rem;
+                }
+            }
+
+            .form-actions {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                button {
+                    padding: 0.5rem 1rem;
+                    font-size: 1rem;
+                    background-color: $menuBg;
+                    color: #fff;
+                    border: none;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+

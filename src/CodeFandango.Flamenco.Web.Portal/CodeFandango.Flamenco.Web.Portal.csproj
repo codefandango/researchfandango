@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-CodeFandango.Flamenco.Web.Portal-8038d85d-a7ed-4cd7-8508-e6180127a18d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeFandango.Flamenco.Abstractions\CodeFandango.Flamenco.Abstractions.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.BusinessLogic\CodeFandango.Flamenco.BusinessLogic.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.DataAccess\CodeFandango.Flamenco.DataAccess.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.DataMapper\CodeFandango.Flamenco.DataMapper.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.Data\CodeFandango.Flamenco.Data.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.Models\CodeFandango.Flamenco.Models.csproj" />
+  </ItemGroup>
+
+</Project>

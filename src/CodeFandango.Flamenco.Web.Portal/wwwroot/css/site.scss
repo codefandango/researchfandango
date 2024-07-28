@@ -1,0 +1,202 @@
+$menuWidth: 250px;
+$menuBg: #9cd3ff;
+
+$primary: $menuBg;
+$secondary: #ffa536;
+
+$pad: 16px;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zain:wght@300;400;700;800;900&display=swap');
+
+body {
+    font-family: Poppins;
+}
+
+.menu {
+    z-index: 250;
+    position: fixed;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: $menuWidth;
+    background-color: $menuBg;
+    background: linear-gradient($menuBg, darken($menuBg, 15%));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    color: #fff;
+    box-shadow: 0 0 $pad #999;
+
+    .logo {
+        padding: $pad;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .menu-items {
+        width: 100%;
+        margin-top: $pad;
+
+        .menu-item {
+            text-decoration: none;
+            margin-left: -$pad;
+            margin-right: -$pad;
+            padding: $pad * 0.5;
+            padding-left: $pad;
+            padding-right: $pad;
+            display: flex;
+            color: #000;
+            align-items: center;
+
+            .icon {
+                width: 15%;
+                font-size: 1.5rem;
+                margin-right: $pad;
+            }
+
+            label {
+                text-decoration: none;
+                cursor: pointer;
+                flex-grow: 1;
+            }
+        }
+
+        .menu-item:hover {
+            background-color: darken($menuBg, 40%);
+            color: white;
+        }
+
+        .menu-item.active {
+            background-color: darken($menuBg, 40%);
+            color: white;
+        }
+    }
+
+    .menu-items.main {
+        flex-grow: 1;
+    }
+}
+
+.sub-menu {
+    z-index: 350;
+    position: fixed;
+    left: $menuWidth;
+    top: 0;
+    bottom: 0;
+    width: $menuWidth;
+    background-color: darken($menuBg, 40%);
+    color: white;
+
+    .loading {
+        margin: $pad;
+        padding: $pad;
+        text-align: center;
+    }
+
+    .menu-items {
+        width: 100%;
+        flex-grow: 1;
+
+        .menu-item {
+            text-decoration: none;
+            padding: $pad * 0.5;
+            padding-left: $pad;
+            padding-right: $pad;
+            display: flex;
+            color: #fff;
+            align-items: center;
+
+            .icon {
+                width: 15%;
+                font-size: 1.5rem;
+                margin-right: $pad;
+            }
+
+            label {
+                text-decoration: none;
+                cursor: pointer;
+                flex-grow: 1;
+            }
+        }
+
+        .menu-item:hover {
+            background-color: darken($menuBg, 60%);
+            color: white;
+        }
+
+        .menu-item.active {
+            background-color: darken($menuBg, 60%);
+            color: white;
+        }
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.content {
+    margin-left: $menuWidth + $pad;
+    padding-top: $pad;
+    margin-right: $pad;
+
+    .page-title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $pad;
+
+        h1 {
+            margin: 0;
+        }
+
+        .toolbar {
+            display: flex;
+
+            button.btn-primary {
+                background-color: darken($primary, 40%);
+                color: white;
+            }
+
+            button.btn-icon-circle {
+                border-radius: 50%;
+                width: 3rem;
+                height: 3rem;
+            }
+
+            button.btn-primary:hover {
+                background-color: darken($primary, 20%);
+                border-color: darken($primary, 30%);
+            }
+        }
+    }
+}
+
+.card {
+    border-color: $secondary;
+    box-shadow: 0 0 5px #ccc;
+
+    .card-header {
+        background-color: $secondary;
+    }
+}
+
+.buttonBar {
+    position: fixed;
+    bottom: 0;
+    left: $menuWidth;
+    right: 0;
+    padding: $pad;
+    text-align: right;
+    background-color: lighten($menuBg, 15%);
+    z-index: 150;
+
+    button {
+        font-size: 1.5rem;
+        background-color: darken($menuBg, 40%);
+        color: white;
+    }
+}

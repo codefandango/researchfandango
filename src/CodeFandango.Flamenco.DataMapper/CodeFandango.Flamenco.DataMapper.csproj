@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeFandango.Flamenco.Abstractions\CodeFandango.Flamenco.Abstractions.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.Data\CodeFandango.Flamenco.Data.csproj" />
+    <ProjectReference Include="..\CodeFandango.Flamenco.Models\CodeFandango.Flamenco.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@types/bootstrap": "^5.2.10",
+    "boostrap": "^2.0.0",
+    "bootstrap": "^5.3.3",
+    "reefjs": "^13.0.4"
+  },
+  "devDependencies": {
+    "@types/reefjs": "^7.6.5",
+    "esbuild": "^0.23.0",
+    "glob": "^11.0.0",
+    "nodemon": "^3.1.4",
+    "ts-loader": "^9.5.1",
+    "ts-transform-import-path-rewrite": "^0.3.0",
+    "ttypescript": "^1.5.15",
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "monitor": "nodemon --watch ts --ext ts --exec node build.js"
+  }
+}

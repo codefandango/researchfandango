@@ -1,0 +1,15 @@
+﻿<div class="page-title">
+    <h1>Surveys</h1>
+    <div class="toolbar">
+        <button class="btn btn-primary btn-icon-circle"><i class="fas fa-plus"></i></button>
+    </div>
+</div>
+
+<div id="surveys"></div>
+
+@section scripts { 
+    <script type="module">
+        import { surveyManager } from "/js/editors/survey/surveyManager.js";
+        var editor = new surveyManager();
+    </script>
+}

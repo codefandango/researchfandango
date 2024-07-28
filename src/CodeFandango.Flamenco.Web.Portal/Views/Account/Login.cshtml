@@ -1,0 +1,49 @@
+﻿<!-- Login form using standard HTML -->
+@model CodeFandango.Flamenco.Models.Authentication.LoginViewModel
+@inject IConfiguration config
+
+@{
+    Layout = "_Login";
+    ViewData["Title"] = "Log in";
+
+    var databases = config.GetSection("Databases").GetChildren();
+}
+
+<form id="loginform" method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @if (databases.Count() > 1)
+    {
+        <div class="form-group">
+            <label asp-for="Database"></label>
+            <select asp-for="Database" class="form-control">
+                @foreach (var database in databases)
+                {
+                    <option value="@database.Key">@database.Key</option>
+                }
+            </select>
+            <span asp-validation-for="Database" class="text-danger"></span>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" asp-for="Database" value="@databases.First().Key" />
+        <div class="form-group">
+            <label asp-for="Database"></label>
+            <label class="form-control-plaintext" autocomplete="off">@databases.First().Key</label>
+            <span asp-validation-for="Database" class="text-danger"></span>
+        </div>
+    }
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Password"></label>
+        <input type="password" asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+</form>

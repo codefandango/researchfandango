@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es2022", // Set the target to the highest possible version of ES
+        "module": "es2022", // Use ES modules
+        "outDir": "./js", // Output directory for compiled .js files
+        "rootDir": "./ts", // Source directory for .ts files
+        "esModuleInterop": true, // Enable interoperability between CommonJS and ES modules
+        "resolveJsonModule": true, // Enable importing JSON files
+        "strict": false, // Enable strict type checking
+        "moduleResolution": "node", // Use Node.js module resolution strategy
+        "baseUrl": ".", // Base URL for module resolution
+        "paths": {
+            "*": ["./ts/*"] // Map all module imports to the ./ts folder
+        }
+    },
+    "include": ["./ts/**/*.ts"], // Include all .ts files in the ./ts folder and its subfolders
+    "exclude": ["node_modules"] // Exclude the node_modules folder from compilation
+}
