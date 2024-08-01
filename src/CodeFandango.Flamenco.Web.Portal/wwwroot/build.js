@@ -9,6 +9,7 @@ esbuild.build({
   format: 'iife',
   globalName: 'ui',
   target: ['chrome58', 'firefox57', 'safari11', 'edge16'],
+  minify: true,
 }).catch(() => process.exit(1));
 
 esbuild.build({
@@ -19,6 +20,7 @@ esbuild.build({
     format: 'iife',
     globalName: 'editors',
     target: ['es2015'],
+    minify: true,
 }).catch(() => process.exit(1));
   
   

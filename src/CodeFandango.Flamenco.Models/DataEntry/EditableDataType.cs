@@ -10,6 +10,7 @@
         DateTime,
         Text,
         Image,
-        Color
+        Color,
+        Reference
     }
 }

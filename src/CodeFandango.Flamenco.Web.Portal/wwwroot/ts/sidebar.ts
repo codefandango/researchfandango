@@ -1,4 +1,5 @@
 import { Offcanvas } from 'bootstrap/dist/js/bootstrap';
+import { sidebarButtonDefinition, sidebarButtonCollection, sidebarConfiguration } from './objectEditorTypes';
 
 export class sidebar {
 
@@ -20,7 +21,12 @@ export class sidebar {
         backdrop: 'static'
     }
 
-    constructor(config?: any) {
+    buttons: sidebarButtonCollection = {};
+    onClose: Function;
+
+    constructor(config?: sidebarConfiguration) {
+        this.onClose = () => { };
+        if (config?.onClose) this.onClose = config.onClose;
         this.rootConfig = config;
         this.id = crypto.randomUUID();
         var elementId: any = this.#addToPage();
@@ -29,6 +35,13 @@ export class sidebar {
         this.bodyElement = this.element.querySelector('.offcanvas-body');
         this.bodyElement.innerHTML = '';
         this.element.querySelector('.btn-close').addEventListener('click', this.close);
+
+        this.buttons['close'] = {
+            text: 'Close',
+            icon: 'fas fa-times',
+            click: this.close,
+            order: 2
+        };
     }
 
     beforeClose(cb) {
@@ -37,11 +50,13 @@ export class sidebar {
 
     close = (force) => {
         if (force === true) {
+            this.onClose();
             this.Offcanvas.hide();
             return;
         }
         this.beforeClose(x=>{
             if (x) {
+                this.onClose();
                 this.Offcanvas.hide();
             }
         })
@@ -64,13 +79,44 @@ export class sidebar {
         return idSelector;        
     }
 
-    render() {
+    render(): string {
+
+        var html = ``;
+
+        // Render the buttons
+        html += `
+            <div class="toolbar">
+                <div class="btn-group" role="group">`;
+        Object.keys(this.buttons).sort((a, b) => this.buttons[a].order - this.buttons[b].order).forEach(x => {
+            html += `<button type="button" class="btn toolbar-btn" onclick="${this.buttons[x].click}" data-button-id="${x}">
+                <div class="icon"><i class="${this.buttons[x].icon}"></i></div>
+                <label>${this.buttons[x].text}</label>
+            </button>`;
+        });
+        html += `</div></div>`;
+
+        return html;
+
+    }
+
+    addButton(key: string, button: sidebarButtonDefinition) {
+        this.buttons[key] = button;
+        this.render();
     }
 
     bind() {
+        this.bodyElement.querySelectorAll('.toolbar-btn').forEach((x: any) => {
+            x.removeEventListener('click', this.toolbarButtonClick);
+            x.addEventListener('click', this.toolbarButtonClick);
+        });
+    }
+
+    toolbarButtonClick = (e: any) => {
+        var buttonId = e.currentTarget.getAttribute('data-button-id');
+        this.buttons[buttonId].click(e);
     }
     
-    show = (e: any) => {
+    show = (e?: any) => {
         this.Offcanvas.show();
     }
 

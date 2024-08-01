@@ -1,15 +1,28 @@
-﻿<div class="page-title">
+﻿@{
+    ViewData["Title"] = "Surveys";
+}
+
+<div class="page-title">
     <h1>Surveys</h1>
     <div class="toolbar">
-        <button class="btn btn-primary btn-icon-circle"><i class="fas fa-plus"></i></button>
+        <button class="btn btn-primary btn-icon-circle create-object" data-object-type="survey"><i class="fas fa-plus"></i></button>
     </div>
 </div>
 
-<div id="surveys"></div>
+<div id="editor"></div>
 
-@section scripts { 
-    <script type="module">
-        import { surveyManager } from "/js/editors/survey/surveyManager.js";
-        var editor = new surveyManager();
+@section scripts {
+    <script src="/js/objectEditor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var editor = new editors.objectEditor({
+                typeCode: 'survey',
+                definitionUrl: "/api/surveys/definition",
+                listUrl: "/api/surveys",
+                getUrl: '/api/surveys/{id}',
+                saveUrl: "/api/surveys",
+                deleteUrl: "/api/surveys",
+            });
+        });
     </script>
 }

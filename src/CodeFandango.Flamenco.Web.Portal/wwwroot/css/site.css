@@ -167,3 +167,22 @@ body {
   background-color: #0073cf;
   color: white;
 }
+
+.offcanvas-body .toolbar {
+  margin-top: -16px;
+  margin-bottom: 16px;
+}
+.offcanvas-body .toolbar .btn {
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+.offcanvas-body .toolbar .btn:hover {
+  background-color: #e9f5ff;
+}
+.offcanvas-body .toolbar .btn-group .btn {
+  border-radius: 8px;
+  margin-right: 8px;
+}
+.btn-group .offcanvas-body .toolbar .btn-group .btn:first-of-type:before {
+  border-left: 1px solid #ccc;
+}

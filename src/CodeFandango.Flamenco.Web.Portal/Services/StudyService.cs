@@ -8,20 +8,81 @@ using CodeFandango.Flamenco.Web.Portal.Interfaces;
 
 namespace CodeFandango.Flamenco.Web.Portal.Services
 {
-    internal class StudyService : IStudyService
+    internal class StudyService : ObjectEditorService<Study, StudyModel>, IStudyService
     {
-        private readonly IDataAccess da;
-        private readonly IDataMapper mapper;
 
-        public StudyService(IDataAccess da, IDataMapper mapper)
+        public StudyService(IDataAccess da, IDataMapper mapper) : base(da, mapper)
         {
-            this.da = da;
-            this.mapper = mapper;
         }
 
-        public async Task<Success<EditableFieldCollection>> GetDefinition()
+        public async Task<Success<StudyModel>> CreateOrUpdateStudy(StudyModel study)
         {
-            var model = new EditableFieldCollection()
+
+            if (study.Id == 0)
+            {
+                return await CreateStudy(study);
+            }
+            else
+            {
+                return await UpdateStudy(study);
+            }
+
+        }
+
+        private async Task<Success<StudyModel>> UpdateStudy(StudyModel study)
+        {
+            try
+            {
+                var existingStudy = await data.Studies.GetObject(study.Id);
+                if (existingStudy == null)
+                {
+                    return new Success<StudyModel>(false, "Study not found");
+                }
+
+                var updatedStudy = mapper.Map<StudyModel, Study>(study);
+                var result = await data.Studies.UpdateObject(updatedStudy);
+                if (result == null)
+                {
+                    return new Success<StudyModel>(false, "Failed to update study");
+                }
+
+                var model = mapper.Map<Study, StudyModel>(result);
+                return new Success<StudyModel>(model);
+            }
+            catch (Exception ex)
+            {
+                return new Success<StudyModel>(false, ex.Message);
+            }
+        }
+
+        private async Task<Success<StudyModel>> CreateStudy(StudyModel study)
+        {
+            try
+            {
+                var newStudy = mapper.Map<StudyModel, Study>(study);
+                var result = await data.Studies.CreateObject(newStudy);
+                if (result == null)
+                {
+                    return new Success<StudyModel>(false, "Failed to create study");
+                }
+
+                var model = mapper.Map<Study, StudyModel>(result);
+                return new Success<StudyModel>(model);
+            }
+            catch (Exception ex)
+            {
+                return new Success<StudyModel>(false, ex.Message);
+            }
+        }
+
+        public override async Task<Success<EditableObjectDefinition>> GetDefinition()
+        {
+            var model = new EditableObjectDefinition()
+            {
+                Name = "Study",
+            };
+
+            var fields = new EditableFieldCollection()
             {
                 new EditableFieldModel()
                 {
@@ -39,7 +100,7 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
                     Name = "Description",
                     Description = "A description of the study",
                     Code = "description",
-                    Type = EditableDataType.String,
+                    Type = EditableDataType.Text,
                     IsRequired = false,
                     Order = 2,
                     Group = "General",
@@ -47,35 +108,10 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
                 },
             };
 
-            return await Task.FromResult(new Success<EditableFieldCollection>(model));
+            model.Fields = fields;
+
+            return await Task.FromResult(new Success<EditableObjectDefinition>(model));
         }
 
-        public async Task<Success<List<StudyModel>>> GetStudies()
-        {
-            try
-            {
-                var studies = await da.Studies.GetObjects(StudySpec.None);
-                var mappedList = studies.Select(s => mapper.Map<Study, StudyModel>(s)).ToList();
-                return new Success<List<StudyModel>>(mappedList);
-            }
-            catch (Exception ex)
-            {
-                return new Success<List<StudyModel>>(false, ex.Message);
-            }
-        }
-
-        public async Task<Success<StudyModel>> GetStudy(int id)
-        {
-            try
-            {
-                var study = await da.Studies.GetObject(id);
-                var model = mapper.Map<Study, StudyModel>(study);
-                return new Success<StudyModel>(model);
-            }
-            catch (Exception ex)
-            {
-                return new Success<StudyModel>(false, ex.Message);
-            }
-        }
     }
 }

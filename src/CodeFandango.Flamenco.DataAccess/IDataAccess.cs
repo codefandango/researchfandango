@@ -7,5 +7,8 @@ namespace CodeFandango.Flamenco.DataAccess
         FlamencoDb Database { get; }
         ClientDataAccess Clients { get; set; }
         StudiesDataAccess Studies { get; set; }
+        SurveysDataAccess Surveys { get; set; }
+
+        IObjectDataAccess<T> GetObjectAccessor<T>() where T : class;
     }
 }

@@ -16,5 +16,6 @@ namespace CodeFandango.Flamenco.Models.DataEntry
         public int Order { get; set; }
         public string? Group { get; set; }
         public bool ShowInList { get; set; }
+        public string? ObjectReference { get; set; }
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeFandango.Flamenco.Models.Studies
+namespace CodeFandango.Flamenco.Models.Surveys
 {
-    public class StudyModel : NamedModel
+    public class SurveyModel : NamedModel
     {
-        public bool IsEnabled { get; set; }
+        public long StudyId { get; set; }
     }
 }

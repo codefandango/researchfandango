@@ -19,6 +19,7 @@ namespace CodeFandango.Flamenco.Data
         public DbSet<ClientField> ClientFields { get; set; }
         public DbSet<ClientData> Client { get; set; }
         public DbSet<Study> Studies { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CodeFandango.Flamenco.DataAccess
 {
-    public enum StudySpec
+    public enum StudySpec 
     {
         None = 0
     }

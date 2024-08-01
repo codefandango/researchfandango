@@ -6,9 +6,14 @@ export interface objectEditorConfiguration {
     definitionUrl: string;
     getUrl: string;
 }
-export interface objectEditorSidebarConfiguration {
+export interface sidebarConfiguration {
+    onClose: Function;
+}
+export interface objectEditorSidebarConfiguration extends sidebarConfiguration {
     typeCode: string;
+    definition: any;
     get: Function;
+    save: Function;
 }
 export interface editableFieldDefinition {
     name: string;
@@ -28,5 +33,19 @@ export enum editableDataType {
     DateTime,
     Text,
     Image,
-    Color
+    Color,
+    Reference
+}
+export interface sidebarButtonCollection {
+    [key: string]: sidebarButtonDefinition;
+}
+export interface sidebarButtonDefinition {
+    text: string;
+    icon: string;
+    click: Function;
+    order: number;
+} 
+export interface objectValidationError {
+    code: string;
+    message: string;
 }

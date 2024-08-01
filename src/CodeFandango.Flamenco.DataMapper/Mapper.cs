@@ -2,6 +2,7 @@
 using CodeFandango.Flamenco.Abstractions;
 using CodeFandango.Flamenco.Data;
 using CodeFandango.Flamenco.Models.Studies;
+using CodeFandango.Flamenco.Models.Surveys;
 
 namespace CodeFandango.Flamenco.Models
 {
@@ -12,6 +13,7 @@ namespace CodeFandango.Flamenco.Models
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Study, StudyModel>().ReverseMap();
+                cfg.CreateMap<Survey, SurveyModel>().ReverseMap();
             });
 
             mapper = config.CreateMapper();

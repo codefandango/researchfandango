@@ -3,6 +3,7 @@ $menuBg: #9cd3ff;
 
 $primary: $menuBg;
 $secondary: #ffa536;
+$grey: #ccc;
 
 $pad: 16px;
 
@@ -200,3 +201,33 @@ body {
         color: white;
     }
 }
+
+.offcanvas-body {
+    .toolbar {
+        margin-top: -$pad;
+        margin-bottom: $pad;
+
+        .btn {
+            background-color: transparent;
+            border: 1px solid $grey;
+        }
+
+        .btn:hover {
+            background-color: lighten($primary, 15%);
+        }
+
+        .btn-group {
+            .btn {
+                border-radius: $pad * 0.5;
+                margin-right: $pad * 0.5;
+            }
+        }
+
+        .btn-group & .btn-group {
+            .btn:first-of-type:before {
+                border-left: 1px solid $grey;
+            }
+        }
+    }
+}
+
