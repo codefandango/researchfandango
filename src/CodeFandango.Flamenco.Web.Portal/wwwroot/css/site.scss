@@ -231,3 +231,17 @@ body {
     }
 }
 
+table.table {
+    th {
+        background-color: $secondary;
+    }
+}
+
+tr.noedit {
+    td {
+        background-color: lighten($grey, 15%);
+        color: darken($grey, 15%);
+    }
+
+    font-style: italic;
+}

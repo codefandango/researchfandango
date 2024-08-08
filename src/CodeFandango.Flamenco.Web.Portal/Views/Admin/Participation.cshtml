@@ -1,0 +1,22 @@
+﻿@model ValueTuple<string, long>
+@{
+    ViewData["Title"] = "Participation Setup";
+}
+
+<div class="page-title">
+    <h1>Participation Setup</h1>
+    <div class="toolbar">
+        <button class="btn btn-primary btn-icon-circle add-field" data-object-type="participantField"><i class="fas fa-plus"></i></button>
+    </div>
+</div>
+
+<div id="editor"></div>
+
+@section scripts {
+    <script src="/js/participation/setup.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var participationManager = new admin.participationManager('@(Model.Item1)', @(Model.Item2))
+        });
+    </script>
+}

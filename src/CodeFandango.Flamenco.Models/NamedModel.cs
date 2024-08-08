@@ -12,4 +12,9 @@ namespace CodeFandango.Flamenco.Models
         public required string Name { get; set; }
         public string? Description { get; set; }
     }
+
+    public class UniquelyCodedModel : NamedModel
+    {
+        public required string Code { get; set; }
+    }
 }

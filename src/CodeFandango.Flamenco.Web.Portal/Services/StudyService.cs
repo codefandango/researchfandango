@@ -80,6 +80,18 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
             var model = new EditableObjectDefinition()
             {
                 Name = "Study",
+                Actions = [
+                    new ObjectActionDefinition()
+                    {
+                        Name = "Participation",
+                        Code = "participation",
+                        Order = 1,
+                        Icon = "fas fa-users",
+                        Action = "navigate",
+                        Path = "/admin/participation/?studyId={id}",
+                        Scope = ObjectActionScope.Edit
+                    }
+                ]
             };
 
             var fields = new EditableFieldCollection()

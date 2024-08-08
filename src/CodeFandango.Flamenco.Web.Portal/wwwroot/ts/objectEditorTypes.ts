@@ -11,9 +11,43 @@ export interface sidebarConfiguration {
 }
 export interface objectEditorSidebarConfiguration extends sidebarConfiguration {
     typeCode: string;
-    definition: any;
+    definition: editableObjectDefinition | editableFormModel; 
     get: Function;
     save: Function;
+}
+export interface fieldAnswerModel {
+    fieldCode: string;
+    value: any;
+}
+export interface editableObjectDefinition {
+    name: string,
+    flags: number,
+    fields: editableFieldDefinition[],
+    references: editableObjectReferenceCollection,
+    actions: objectActionDefinition[]
+}
+export interface objectActionDefinition {
+    code: string;
+    name: string;
+    order: number;
+    icon: string;
+    action: string;
+    path: string;
+    scope: objectActionScope;
+}
+export interface editableObjectReferenceCollection {
+    [key: string]: referenceObject[];
+}
+export interface referenceObject {
+    id: number;
+    name: string;
+}
+export interface editableFormModel {
+    name?: string;
+    fields: editableFieldDefinition[];
+    values: fieldAnswerModel[];
+    actions?: any;
+    references?: any;
 }
 export interface editableFieldDefinition {
     name: string;
@@ -23,6 +57,8 @@ export interface editableFieldDefinition {
     isRequired: boolean;
     order: number;
     group?: string;
+    fieldReference?: string,
+    uniqueScope?: string,
 }
 export enum editableDataType {
     String,
@@ -34,7 +70,8 @@ export enum editableDataType {
     Text,
     Image,
     Color,
-    Reference
+    Reference,
+    Code
 }
 export interface sidebarButtonCollection {
     [key: string]: sidebarButtonDefinition;
@@ -48,4 +85,9 @@ export interface sidebarButtonDefinition {
 export interface objectValidationError {
     code: string;
     message: string;
+}
+export enum objectActionScope {
+    New = 1,
+    Edit = 2,
+    All = 3
 }

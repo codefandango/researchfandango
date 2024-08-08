@@ -8,7 +8,10 @@ namespace CodeFandango.Flamenco.DataAccess
         ClientDataAccess Clients { get; set; }
         StudiesDataAccess Studies { get; set; }
         SurveysDataAccess Surveys { get; set; }
+        ParticipationSetupDataAccess ParticipationSetup { get; set; }
+        ParticipantFieldDataAccess ParticipantFields { get; set; }
 
         IObjectDataAccess<T> GetObjectAccessor<T>() where T : class;
+        Task<bool> UniqueCodeExists(string scope, string pascalCase);
     }
 }

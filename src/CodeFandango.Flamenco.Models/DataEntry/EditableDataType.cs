@@ -11,6 +11,7 @@
         Text,
         Image,
         Color,
-        Reference
+        Reference,
+        Code
     }
 }

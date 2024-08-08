@@ -23,4 +23,13 @@ esbuild.build({
     minify: true,
 }).catch(() => process.exit(1));
   
-  
+esbuild.build({
+  entryPoints: ['ts/participation/setup.ts'], // Adjust the path to your TypeScript file,
+  bundle: true,
+  outfile: 'js/participation/setup.js', // Adjust the output file path as needed
+  platform: 'browser',
+  format: 'iife',
+  globalName: 'admin',
+  target: ['es2015'],
+  minify: true,
+}).catch(() => process.exit(1));

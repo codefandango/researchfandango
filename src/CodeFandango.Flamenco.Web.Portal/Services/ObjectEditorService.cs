@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using CodeFandango.Flamenco.Data;
-using CodeFandango.Flamenco.Models.Studies;
-using CodeFandango.Flamenco.Models;
+﻿using CodeFandango.Flamenco.Models;
 using CodeFandango.Flamenco.DataAccess;
 using CodeFandango.Flamenco.Abstractions;
 using CodeFandango.Flamenco.Web.Portal.Interfaces;
@@ -36,7 +33,7 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
             }
         }
 
-        public virtual async Task<Success<TModel>> GetObject(int id)
+        public virtual async Task<Success<TModel>> GetObject(long id)
         {
             try
             {
@@ -67,7 +64,28 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
 
         protected virtual async Task<Success<TModel>> UpdateObject(TModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var existingObject = await data.GetObjectAccessor<T>().GetObject(model.Id);
+                if (existingObject == null)
+                {
+                    return new Success<TModel>(false, "Object not found.");
+                }
+
+                var updatedEntity = mapper.Map<TModel, T>(model);
+                var result = await data.GetObjectAccessor<T>().UpdateObject(updatedEntity);
+                if (result == null)
+                {
+                    return new Success<TModel>(false, "Failed to update object.");
+                }
+
+                var updatedModel = mapper.Map<T, TModel>(result);
+                return new Success<TModel>(updatedModel);
+            }
+            catch (Exception ex)
+            {
+                return new Success<TModel>(false, ex.Message);
+            }
         }
 
         protected virtual async Task<Success<TModel>> CreateObject(TModel model)

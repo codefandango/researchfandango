@@ -1,16 +1,17 @@
 import { helper } from 'helpers.js';
 import { ajax } from './ajax.js';
-import { objectEditorConfiguration, editableFieldDefinition, editableDataType, objectEditorSidebarConfiguration, objectValidationError } from './objectEditorTypes.js';
+import { objectEditorConfiguration, editableFieldDefinition, editableDataType, objectEditorSidebarConfiguration, objectValidationError, objectActionScope } from './objectEditorTypes.js';
 import { sidebar } from './sidebar.js';
 // @ts-expect-error
 import { render } from 'reefjs';
 import { on } from 'events';
 
-class objectEditorSidebar extends sidebar {
+export class objectEditorSidebar extends sidebar {
 
     config: objectEditorSidebarConfiguration;
     item: any;
     errors: objectValidationError[] = [];
+    codeTimers: any = {};
 
     constructor(config: objectEditorSidebarConfiguration) {
         super(config);
@@ -25,9 +26,34 @@ class objectEditorSidebar extends sidebar {
         });
     }
 
+    addButtons = () => {
+        var orderOffset = 2;
+        var currentScope = this.item.id ?? 0 > 0 ? objectActionScope.Edit : objectActionScope.New;
+
+        this.config.definition.actions?.forEach((x: any) => {
+            if ((x.scope & currentScope) == 0) return;
+            this.addButton(x.code, {
+                text: x.name,
+                icon: x.icon,
+                click: this.actionButtonClick,
+                order: x.order + orderOffset
+            });
+        });
+    }
+
+    actionButtonClick = (e) => {
+        var action = e.currentTarget.getAttribute('data-button-id');
+        var actionDefinition = this.config.definition.actions.find(x => x.code == action);
+        if (actionDefinition.action == 'navigate'){
+            var url = actionDefinition.path.replace('{id}', this.item.id);
+            window.location.href = url;
+        }
+    }
+
     load = (id: number) => {
         this.config.get(id).then((x: any) => {
             this.item = x.model;
+            this.addButtons();
             this.#setTitle('Edit ' + this.config.typeCode);
             this.show();
             this.render();
@@ -35,7 +61,7 @@ class objectEditorSidebar extends sidebar {
     }
 
     validate = () => {
-        var item = this.getObject();
+        var item = this.item;
         var errors: objectValidationError[] = [];
         return new Promise((resolve, reject) => {
             this.config.definition.fields.forEach((x: any) => {
@@ -54,7 +80,7 @@ class objectEditorSidebar extends sidebar {
     save = () => {
         this.validate().then(validation=>{
             this.errors = [];
-            this.config.save(this.getObject()).then((x: any) => {
+            this.config.save(this.item).then((x: any) => {
                 this.close(true);
             });
         }).catch((errors: objectValidationError[]) => {
@@ -66,7 +92,8 @@ class objectEditorSidebar extends sidebar {
     newObject = () => {
         this.item = {};
         this.render();
-        this.#setTitle('New ' + this.config.typeCode);
+        this.addButtons();
+        this.#setTitle('New ' + this.config.definition?.name || this.config.typeCode);
         this.show();
     }
 
@@ -155,23 +182,26 @@ class objectEditorSidebar extends sidebar {
 
             html += `<div class="h3">${x}</div>`;
 
-            this.config.definition.fields.filter(y => y.group == x).forEach((y: any) => {
-                var error = this.errors.find(z => z.code == y.code);
+            this.config.definition.fields.filter(y => y.group == x && y.type != editableDataType.Code).forEach((y: any) => {
+                var error = this.errors?.find(z => z.code == y.code);
+                var codeField = this.config.definition.fields.find(z => z.type == editableDataType.Code && z.fieldReference == y.code);
                 html += `<div class="row mb-3"><div class="col">
                 <div class="form-group mb-3">
-                    <label><b>${y.name}</b></label>
-                    ${y.description ? `<small class="form-text text-muted">${y.description}</small>` : ''}
-                    ${error ? `<small class="text-danger ps-3">${error.message}</small>` : ''}
-                    ${y.type == editableDataType.Text ? `<textarea class="form-control" data-code="${y.code}">${this.item[y.code] || ''}</textarea>` : ''}
-                    ${y.type == editableDataType.String ? `<input type="text" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
-                    ${y.type == editableDataType.Number ? `<input type="number" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    <label class="d-flex justify-content-between">
+                        <b>${y.name}</b>
+                        ${codeField ? `<span class="form-code-field" data-for="${y.code}"><i class="fas fa-key"></i> ${this.item[codeField.code] ?? ''}</span>` : ''}
+                    </label>
+                    ${y.type == editableDataType.Text ? `<textarea class="form-control" placeholder="${y.description}" data-code="${y.code}">${this.item[y.code] || ''}</textarea>` : ''}
+                    ${y.type == editableDataType.String ? `<input type="text" class="form-control" placeholder="${y.description}" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    ${y.type == editableDataType.Number ? `<input type="number" class="form-control" placeholder="${y.description}" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
                     ${y.type == editableDataType.Boolean ? `<input type="checkbox" class="form-control" data-code="${y.code}" @checked="${this.item[y.code] || ''}" />` : ''}
-                    ${y.type == editableDataType.Date ? `<input type="date" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
-                    ${y.type == editableDataType.Time ? `<input type="time" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
-                    ${y.type == editableDataType.DateTime ? `<input type="datetime-local" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
-                    ${y.type == editableDataType.Image ? `<input type="text" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
-                    ${y.type == editableDataType.Color ? `<input type="color" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    ${y.type == editableDataType.Date ? `<input type="date" class="form-control" placeholder="${y.description}" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    ${y.type == editableDataType.Time ? `<input type="time" class="form-control" placeholder="${y.description}" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    ${y.type == editableDataType.DateTime ? `<input type="datetime-local" placeholder="${y.description}" class="form-control" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    ${y.type == editableDataType.Image ? `<input type="text" class="form-control" placeholder="${y.description}" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
+                    ${y.type == editableDataType.Color ? `<input type="color" class="form-control" placeholder="${y.description}" data-code="${y.code}" @value="${this.item[y.code] || ''}" />` : ''}
                     ${y.type == editableDataType.Reference ? getReferenceControl(y) : ''}
+                    ${error ? `<small class="text-danger ps-3">${error.message}</small>` : ''}
                 </div></div></div></div>`;
             });
 
@@ -209,7 +239,25 @@ class objectEditorSidebar extends sidebar {
             return
         }
         this.item[field] = e.currentTarget.value;
+
+        // Is there a code field that needs to be updated?
+        var codeField = this.config.definition.fields.find(x => x.type == editableDataType.Code && x.fieldReference == field);
+        if (codeField) {
+            if (this.codeTimers[field]) clearTimeout(this.codeTimers[field]);
+            this.codeTimers[field] = setTimeout(() => this.updateCodeField(field, codeField), 500);
+        }
+
     }
+
+    updateCodeField = (field: any, codeField: editableFieldDefinition) =>  {
+        ajax.get('/api/code/' + codeField.uniqueScope + '?value=' + this.item[field]).then((x: any) => {
+            this.item[codeField.code] = x.model;
+            this.render();
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
 
 }
 

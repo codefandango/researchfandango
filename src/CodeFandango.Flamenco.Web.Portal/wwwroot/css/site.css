@@ -186,3 +186,15 @@ body {
 .btn-group .offcanvas-body .toolbar .btn-group .btn:first-of-type:before {
   border-left: 1px solid #ccc;
 }
+
+table.table th {
+  background-color: #ffa536;
+}
+
+tr.noedit {
+  font-style: italic;
+}
+tr.noedit td {
+  background-color: #f2f2f2;
+  color: #a6a6a6;
+}

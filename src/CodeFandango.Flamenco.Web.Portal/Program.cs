@@ -53,6 +53,9 @@ namespace CodeFandango.Flamenco.Web.Portal
 
             builder.Services.AddTransient<IStudyService, StudyService>();
             builder.Services.AddTransient<ISurveyService, SurveyService>();
+            builder.Services.AddTransient<ICustomerService, CustomerService>();
+            builder.Services.AddTransient<IParticipationService, ParticipationService>();
+            builder.Services.AddTransient<IUniqueCodeGenerator, UniqueCodeGenerator>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

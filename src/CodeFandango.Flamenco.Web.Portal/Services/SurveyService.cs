@@ -21,8 +21,8 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
             var model = new EditableObjectDefinition
             {
                 Name= "Survey",
-                Fields = new()
-                {
+                Fields =
+                [
                     new EditableFieldModel
                     {
                         Name = "Name",
@@ -57,7 +57,30 @@ namespace CodeFandango.Flamenco.Web.Portal.Services
                         Group = "General",
                         ObjectReference = "study"
                     }
-                }
+                ],
+                Actions =
+                [
+                    new ObjectActionDefinition
+                    {
+                        Name = "Participation",
+                        Code = "participation",
+                        Order = 1,
+                        Icon = "fas fa-users",
+                        Action = "navigate",
+                        Path = "/admin/participation/?surveyId={id}",
+                        Scope = ObjectActionScope.Edit
+                    },
+                    new ObjectActionDefinition
+                    {
+                        Name = "Questions",
+                        Code = "questions",
+                        Order = 2,
+                        Icon = "fas fa-question",
+                        Action = "navigate",
+                        Path = "/admin/questions/{id}",
+                        Scope = ObjectActionScope.Edit
+                    }
+                ]
             };
 
             var studyQuery = await data.Studies.QueryObjects();

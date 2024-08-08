@@ -12,5 +12,6 @@ namespace CodeFandango.Flamenco.Models.DataEntry
         public EditableObjectFlags Flags { get; set; }
         public EditableFieldCollection Fields { get; set; } = new EditableFieldCollection();
         public Dictionary<string, List<ReferenceObject>> References { get; set; } = new();
+        public List<ObjectActionDefinition> Actions { get; set; } = new();
     }
 }

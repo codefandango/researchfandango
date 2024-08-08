@@ -88,7 +88,7 @@ export class sidebar {
             <div class="toolbar">
                 <div class="btn-group" role="group">`;
         Object.keys(this.buttons).sort((a, b) => this.buttons[a].order - this.buttons[b].order).forEach(x => {
-            html += `<button type="button" class="btn toolbar-btn" onclick="${this.buttons[x].click}" data-button-id="${x}">
+            html += `<button type="button" class="btn toolbar-btn" data-button-id="${x}">
                 <div class="icon"><i class="${this.buttons[x].icon}"></i></div>
                 <label>${this.buttons[x].text}</label>
             </button>`;

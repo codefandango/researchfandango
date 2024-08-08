@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CodeFandango.Flamenco.Abstractions;
 using CodeFandango.Flamenco.Data;
+using CodeFandango.Flamenco.Models.Customers;
+using CodeFandango.Flamenco.Models.Participation;
 using CodeFandango.Flamenco.Models.Studies;
 using CodeFandango.Flamenco.Models.Surveys;
 
@@ -14,6 +16,8 @@ namespace CodeFandango.Flamenco.Models
             {
                 cfg.CreateMap<Study, StudyModel>().ReverseMap();
                 cfg.CreateMap<Survey, SurveyModel>().ReverseMap();
+                cfg.CreateMap<Customer, CustomerModel>().ReverseMap();
+                cfg.CreateMap<ParticipantFieldDefinition, ParticipantFieldDefinitionModel>().ReverseMap();
             });
 
             mapper = config.CreateMapper();

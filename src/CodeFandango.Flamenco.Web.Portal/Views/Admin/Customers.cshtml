@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="page-title">
+    <h1>Customer Management</h1>
+    <div class="toolbar">
+        <button class="btn btn-primary btn-icon-circle create-object" data-object-type="customer"><i class="fas fa-plus"></i></button>
+    </div>
+</div>
+
+<div id="editor"></div>
+
+@section scripts {
+    <script src="/js/objectEditor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var editor = new editors.objectEditor({
+                typeCode: 'customer',
+                definitionUrl: "/api/customers/definition",
+                listUrl: "/api/customers",
+                getUrl: '/api/customers/{id}',
+                saveUrl: "/api/customers",
+                deleteUrl: "/api/customers",
+            });
+        });
+    </script>
+}

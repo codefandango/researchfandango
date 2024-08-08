@@ -20,6 +20,19 @@ namespace CodeFandango.Flamenco.Data
         public DbSet<ClientData> Client { get; set; }
         public DbSet<Study> Studies { get; set; }
         public DbSet<Survey> Surveys { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<ParticipantFieldDefinition> ParticipantFieldDefinitions { get; set; }
+        public DbSet<ParticipantFieldDefinitionCustomer> ParticipantFieldDefinitionCustomers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+            builder.Entity<ParticipantFieldDefinitionCustomer>()
+                .HasKey(x => new { x.ParticipantFieldDefinitionId, x.CustomerId });
+
+            base.OnModelCreating(builder);
+
+        }
 
     }
 }

@@ -7,7 +7,7 @@ namespace CodeFandango.Flamenco.Web.Portal.Interfaces
     {
         Task<Success<TModel>> CreateOrUpdateObject(TModel model);
         abstract Task<Success<EditableObjectDefinition>> GetDefinition();
-        Task<Success<TModel>> GetObject(int id);
+        Task<Success<TModel>> GetObject(long id);
         Task<Success<List<TModel>>> GetObjects();
     }
 }

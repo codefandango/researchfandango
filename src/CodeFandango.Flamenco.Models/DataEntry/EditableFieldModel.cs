@@ -17,5 +17,7 @@ namespace CodeFandango.Flamenco.Models.DataEntry
         public string? Group { get; set; }
         public bool ShowInList { get; set; }
         public string? ObjectReference { get; set; }
+        public string FieldReference { get; set; }
+        public string UniqueScope { get; set; }
     }
 }
